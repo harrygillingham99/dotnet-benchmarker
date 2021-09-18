@@ -36,7 +36,7 @@ namespace Benchmarker.Benchmarks
                     }
                 } while (itemMoved);
             }),
-            ("Insersion Sort", () =>
+            ("Insertion Sort", () =>
             {
                 var listCopy = new List<int>(TestList);
 
