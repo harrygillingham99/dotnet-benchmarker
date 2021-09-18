@@ -5,9 +5,9 @@ namespace Benchmarker.Benchmarks.Templates
 {
     public abstract class Benchmark
     {
-        private readonly Stopwatch _stopwatch;
         private readonly string _description;
         private readonly string _name;
+        private readonly Stopwatch _stopwatch;
 
         protected Benchmark(string name, string description)
         {

@@ -5,8 +5,10 @@ namespace Benchmarker.Benchmarks.Templates
 {
     public abstract class SimpleComparisonBenchmark : Benchmark
     {
-        private readonly  List<(string variantName, Action benchmarkDelegate)>  _benchmarkDelegates;  
-        protected SimpleComparisonBenchmark(string name, string description, List<(string variantName, Action benchmarkDelegate)> benchmarkDelegates) : base(name, description)
+        private readonly List<(string variantName, Action benchmarkDelegate)> _benchmarkDelegates;
+
+        protected SimpleComparisonBenchmark(string name, string description,
+            List<(string variantName, Action benchmarkDelegate)> benchmarkDelegates) : base(name, description)
         {
             _benchmarkDelegates = benchmarkDelegates;
         }
@@ -26,7 +28,8 @@ namespace Benchmarker.Benchmarks.Templates
 
                 runDelegate.Invoke();
 
-                Console.WriteLine($"{variantName} took {ResetStopwatchAndReturnElapsed().TotalMilliseconds}mss to complete.");
+                Console.WriteLine(
+                    $"{variantName} took {ResetStopwatchAndReturnElapsed().TotalMilliseconds}mss to complete.");
             }
         }
     }

@@ -8,57 +8,54 @@ namespace Benchmarker.Benchmarks
 {
     public class ArraySorting : SimpleComparisonBenchmark
     {
-        private static readonly List<int> TestList = Enumerable.Repeat(RandomNumberGenerator.GetInt32(0, 99999), 9999999).ToList();
+        private static readonly List<int> TestList =
+            Enumerable.Repeat(RandomNumberGenerator.GetInt32(0, 99999), 9999999).ToList();
 
-        public ArraySorting() : base("Array Filtering", "Comparing methods of filtering arrays with a predicate", new List<(string variantName, Action benchmarkAction)>
-        {
-            ("Linq Sort", () =>
+        public ArraySorting() : base("Array Filtering", "Comparing methods of filtering arrays with a predicate",
+            new List<(string variantName, Action benchmarkAction)>
             {
-                var listCopy = new List<int>(TestList);
-                _ = listCopy.OrderBy(x => x);
-            }),
-            ("Bubble Sort", () =>
-            {
-                var listCopy = new List<int>(TestList);
-                var itemMoved = false;
-                do
+                ("Linq Sort", () =>
                 {
-                    itemMoved = false;
-                    for (var i = 0; i < listCopy.Count() - 1; i++)
+                    var listCopy = new List<int>(TestList);
+                    _ = listCopy.OrderBy(x => x);
+                }),
+                ("Bubble Sort", () =>
+                {
+                    var listCopy = new List<int>(TestList);
+                    var itemMoved = false;
+                    do
                     {
-                        if (listCopy[i] > listCopy[i + 1])
+                        itemMoved = false;
+                        for (var i = 0; i < listCopy.Count() - 1; i++)
+                            if (listCopy[i] > listCopy[i + 1])
+                            {
+                                var lowerValue = listCopy[i + 1];
+                                listCopy[i + 1] = listCopy[i];
+                                listCopy[i] = lowerValue;
+                                itemMoved = true;
+                            }
+                    } while (itemMoved);
+                }),
+                ("Insertion Sort", () =>
+                {
+                    var listCopy = new List<int>(TestList);
+
+                    for (var i = 0; i < listCopy.Count(); i++)
+                    {
+                        var item = listCopy[i];
+                        var currentIndex = i;
+
+                        while (currentIndex > 0 && listCopy[currentIndex - 1] > item)
                         {
-                            var lowerValue = listCopy[i + 1];
-                            listCopy[i + 1] = listCopy[i];
-                            listCopy[i] = lowerValue;
-                            itemMoved = true;
+                            listCopy[currentIndex] = listCopy[currentIndex - 1];
+                            currentIndex--;
                         }
+
+                        listCopy[currentIndex] = item;
                     }
-                } while (itemMoved);
-            }),
-            ("Insertion Sort", () =>
-            {
-                var listCopy = new List<int>(TestList);
-
-                for (int i = 0; i < listCopy.Count(); i++)
-                {
-                    var item = listCopy[i];
-                    var currentIndex = i;
-
-                    while (currentIndex > 0 && listCopy[currentIndex - 1] > item)
-                    {
-                        listCopy[currentIndex] = listCopy[currentIndex - 1];
-                        currentIndex--;
-                    }
-
-                    listCopy[currentIndex] = item;
-                }
+                })
             })
-
-        })
         {
-            
         }
-
     }
 }
